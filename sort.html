@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset= "utf-8">
+<title>表排序</title>
+<style type="text/css">
+  table{
+  	border-collapse:collapse;
+  	border:solid 1px black;
+  }
+  td{
+  	border:solid 1px black;
+  	text-align: center;
+  }
+  thead tr {
+  	cursor: pointer;
+  }
+  td:first-child{
+  	background: pink
+  }
+</style>
+</head>
+<body>
+<table>
+<thead>
+  <tr>
+  	<td>姓名</td>
+  	<td>力量</td>
+  	<td>敏捷</td>
+  	<td>智力</td>
+  </tr>		
+</thead>
+<tbody>
+  <tr>
+  	<td>德鲁伊</td>
+  	<td>87</td>
+  	<td>14</td>
+  	<td>9</td>
+  </tr>	
+  <tr>
+  	<td>月之骑士</td>
+  	<td>23</td>
+  	<td>48</td>
+  	<td>77</td>
+  </tr>
+  <tr>
+  	<td>众神之王</td>
+  	<td>12</td>
+  	<td>43</td>
+  	<td>99</td>
+  </tr>
+  <tr>
+  	<td>流浪剑客</td>
+  	<td>21</td>
+  	<td>76</td>
+  	<td>43</td>
+  </tr>	
+</tbody>
+</table>
+<script type="text/javascript">
+	var arr = []
+	var newArr = [[]]
+	var x = 0
+	var trDom = document.getElementsByTagName("tr")
+	// var tdDom = trDom[0].getElementsByTagName('td')
+	for (let i=1;i<trDom.length;i++){
+		var tdDom = trDom[i].getElementsByTagName('td')
+        for(let j=0;j<tdDom.length;j++){
+        	arr.push(tdDom[j].innerHTML)
+        }
+		
+	}
+	//转换成二维数组排序
+	var length = arr.length/4
+	for(let k=0;k<length;k++){
+		var dd = arr.splice(0,4)
+	
+			newArr[x] =dd
+			x++
+		
+		
+	}
+		console.log(newArr)
+		var key = null
+		var tibu = null
+	
+        var tag = true
+		function choosekey(){
+			var tdDom = document.getElementsByTagName("td")
+			for(var y = 1;y<tdDom.length;y++){
+				(function(i){
+					tdDom[i].onclick = function(){
+						if (tag==true) {
+							for(let z=0;z<newArr.length-1;z++){
+                               for(let s=0;s<newArr.length-z-1;s++){
+                               	  if (Number(newArr[s][i])<Number(newArr[s+1][i])) {
+                                     tibu = newArr[s]
+                                     newArr[s] = newArr[s+1]
+                                     newArr[s+1] = tibu
+                               	  };
+                               }
+							}
+							tag = !tag
+						}
+						else{
+							for(let z=0;z<newArr.length-1;z++){
+                               for(let s=0;s<newArr.length-z-1;s++){
+                               	  if (Number(newArr[s][i])>Number(newArr[s+1][i])) {
+                                     tibu = newArr[s]
+                                     newArr[s] = newArr[s+1]
+                                     newArr[s+1] = tibu
+                               	  };
+                               }
+							}
+							tag = !tag
+						}	
+						write()
+					}
+				})(y)
+			}
+		}
+	//渲染
+	function write(){
+		for(var i= 1;i<trDom.length;i++){
+			var tdDom = trDom[i].getElementsByTagName('td')
+			for(var j=0;j<4;j++){
+              tdDom[j].innerHTML = newArr[i-1][j]
+			}
+		}
+	}
+ choosekey()
+</script>
+</body>
+</html>
